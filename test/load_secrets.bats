@@ -9,10 +9,6 @@ function setup {
   source "$SRC_PATH/shell_secrets.sh"
 }
 
-@test 'shell_secrets.sh should not immediately load secrets' {
-  [ -z ${TEST_SECRET+x} ]
-}
-
 @test "$LOAD_SECRETS should load secrets from \"\$HOME/.shell_secrets.asc\" by default" {
   $LOAD_SECRETS
   [ "$TEST_SECRET" == 'look not upon me!' ]
