@@ -1,7 +1,6 @@
 #!/usr/bin/env bats
 
-HOME="$BATS_TEST_DIRNAME/mock_home"
-SRC_PATH="$BATS_TEST_DIRNAME/.."
+load shared_whatsits
 TEST_FILE_NAME="$(basename "$BATS_TEST_FILENAME")"
 LOAD_SECRETS="${TEST_FILE_NAME%.*}"
 
