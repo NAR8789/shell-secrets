@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load shared_whatsits
+load common_env
 TEST_FILE_NAME="$(basename "$BATS_TEST_FILENAME")"
 LOAD_SECRETS="${TEST_FILE_NAME%.*}"
 
