@@ -19,3 +19,8 @@ function setup {
   [ ! "$TEST_SECRET" == 'look not upon me!' ]
   [ "$TEST_SECRET" == 'look neither upon me!' ]
 }
+
+@test "$LOAD_SECRETS should not leak environment unnecessarily" {
+  $LOAD_SECRETS
+  [ -z ${SHELL_SECRETS+x} ]
+}
