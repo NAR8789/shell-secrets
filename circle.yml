@@ -10,3 +10,4 @@ checkout:
 test:
   override:
     - bats test
+    - ./test/test_helper/ensure_failures.sh
