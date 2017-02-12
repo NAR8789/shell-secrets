@@ -3,6 +3,10 @@ dependencies:
     - sudo add-apt-repository ppa:duggan/bats --yes
     - sudo apt-get -qq update
     - sudo apt-get install -y bats
+checkout:
+  post:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
 test:
   override:
     - bats test
