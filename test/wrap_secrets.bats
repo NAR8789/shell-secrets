@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 load common_env
-TEST_FILE_NAME="$(basename "$BATS_TEST_FILENAME")"
-WRAP_SECRETS="${TEST_FILE_NAME%.*}"
+load file_prefix
+WRAP_SECRETS="$BATS_TEST_FILE_PREFIX"
 
 function setup {
   source "$SRC_PATH/shell_secrets.sh"
