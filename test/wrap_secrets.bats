@@ -19,3 +19,15 @@ function setup {
 
   unset -f testfunc
 }
+
+@test "secrets should be available within $WRAP_SECRETS, but unavailable outside" {
+  function testfunc {
+    [ "$TEST_SECRET" == 'look not upon me!' ]
+  }
+
+  [ -z ${TEST_SECRET+x} ]
+  $WRAP_SECRETS testfunc
+  [ -z ${TEST_SECRET+x} ]
+
+  unset -f testfunc
+}
