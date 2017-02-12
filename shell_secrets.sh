@@ -9,5 +9,8 @@ function load_secrets {
 function los { load_secrets "$@"; }
 
 function wrap_secrets {
-  "$@"
+  (
+    load_secrets
+    "$@"
+  )
 }
