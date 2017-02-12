@@ -10,17 +10,17 @@ function setup {
 
 @test "$LOAD_SECRETS should load secrets from \"\$HOME/.shell_secrets.asc\" by default" {
   $LOAD_SECRETS
-  [ "$TEST_SECRET" == 'look not upon me!' ]
+  assert_equal "$TEST_SECRET" 'look not upon me!'
 }
 
 @test "$LOAD_SECRETS should load secrets from \"\$SHELL_SECRETS\" if provided" {
   SHELL_SECRETS="$HOME/alternate_secrets.asc"
   $LOAD_SECRETS
-  [ ! "$TEST_SECRET" == 'look not upon me!' ]
-  [ "$TEST_SECRET" == 'look neither upon me!' ]
+  assert [ ! "$TEST_SECRET" == 'look not upon me!' ]
+  assert_equal "$TEST_SECRET" 'look neither upon me!'
 }
 
 @test "$LOAD_SECRETS should not leak environment unnecessarily" {
   $LOAD_SECRETS
-  [ -z ${SHELL_SECRETS+x} ]
+  assert [ -z ${SHELL_SECRETS+x} ]
 }
