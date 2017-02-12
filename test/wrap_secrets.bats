@@ -31,3 +31,15 @@ function setup {
 
   unset -f testfunc
 }
+
+@test "secrets should still be unavailable outside of $WRAP_SECRETS if the wrapped function tries to export the secret" {
+  function testfunc {
+    export TEST_SECRET
+  }
+
+  [ -z ${TEST_SECRET+x} ]
+  $WRAP_SECRETS testfunc
+  [ -z ${TEST_SECRET+x} ]
+
+  unset -f testfunc
+}
