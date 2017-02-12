@@ -16,11 +16,11 @@ function setup {
 @test "$LOAD_SECRETS should load secrets from \"\$SHELL_SECRETS\" if provided" {
   SHELL_SECRETS="$HOME/alternate_secrets.asc"
   $LOAD_SECRETS
-  assert [ ! "$TEST_SECRET" == 'look not upon me!' ]
+  refute_equal "$TEST_SECRET" 'look not upon me!'
   assert_equal "$TEST_SECRET" 'look neither upon me!'
 }
 
 @test "$LOAD_SECRETS should not leak environment unnecessarily" {
   $LOAD_SECRETS
-  assert [ -z ${SHELL_SECRETS+x} ]
+  assert_unset $SHELL_SECRETS
 }
