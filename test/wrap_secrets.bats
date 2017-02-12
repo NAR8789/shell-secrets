@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
-load common_env
-load file_prefix
+load test_helper/common_env
+load test_helper/file_prefix
 WRAP_SECRETS="$BATS_TEST_FILE_PREFIX"
 
 function setup {
@@ -10,9 +10,9 @@ function setup {
 
 @test "$WRAP_SECRETS should execute the command passed to it" {
   function testfunc {
-    [ "$1" == first ]
-    [ "$2" == second ]
-    [ -z ${3+x} ]
+    assert_equal "$1" first
+    assert_equal "$2" second
+    assert_unset $3
   }
 
   $WRAP_SECRETS testfunc first second
@@ -20,12 +20,12 @@ function setup {
 
 @test "secrets should be available within $WRAP_SECRETS, but unavailable outside" {
   function testfunc {
-    [ "$TEST_SECRET" == 'look not upon me!' ]
+    assert_equal "$TEST_SECRET" 'look not upon me!'
   }
 
-  [ -z ${TEST_SECRET+x} ]
+  assert_unset $TEST_SECRET
   $WRAP_SECRETS testfunc
-  [ -z ${TEST_SECRET+x} ]
+  assert_unset $TEST_SECRET
 }
 
 @test "secrets should still be unavailable outside of $WRAP_SECRETS if the wrapped function tries to export the secret" {
@@ -33,7 +33,7 @@ function setup {
     export TEST_SECRET
   }
 
-  [ -z ${TEST_SECRET+x} ]
+  assert_unset $TEST_SECRET
   $WRAP_SECRETS testfunc
-  [ -z ${TEST_SECRET+x} ]
+  assert_unset $TEST_SECRET
 }
