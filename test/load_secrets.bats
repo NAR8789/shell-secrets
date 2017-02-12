@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
-load common_env
-load file_prefix
+load test_helper/common_env
+load test_helper/file_prefix
 LOAD_SECRETS="$BATS_TEST_FILE_PREFIX"
 
 function setup {
