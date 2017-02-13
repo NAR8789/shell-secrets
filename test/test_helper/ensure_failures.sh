@@ -12,7 +12,7 @@ mkdir -p "$OUTPUT_DIR"
 
 for FAIL_SRC in test/failure_examples/*; do
   FAIL_NAME="$(basename "$FAIL_SRC")"
-  SRC_PATH="$FAIL_SRC" bats test 2>"$OUTPUT_DIR/$FAIL_NAME.err" >"$OUTPUT_DIR/$FAIL_NAME.out"
+  SRC_PATH="$FAIL_SRC" bats test 2>"$OUTPUT_DIR/$FAIL_NAME.err.txt" >"$OUTPUT_DIR/$FAIL_NAME.out.txt"
   if [ $? -eq 0 ] ; then
     FAILED_TO_FAIL=1
     printf "\033[0;31mERROR: $FAIL_NAME did not cause a test failure\n"
