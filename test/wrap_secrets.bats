@@ -9,13 +9,20 @@ function setup {
 }
 
 @test "$WRAP_SECRETS should execute the command passed to it" {
+  RUN_EVIDENCE="$BATS_TMPDIR/testfunc_ran"
+  rm -f "$RUN_EVIDENCE"           # a failed cleanup can result on a messy run tmpdir on the next run
+
   function testfunc {
     assert_equal "$1" first
     assert_equal "$2" second
     assert_unset $3
+    touch "$RUN_EVIDENCE"         # can't rely on variable exports, because $WRAP_SECRETS is designed to clean up state
   }
 
   $WRAP_SECRETS testfunc first second
+  assert [ -r "$RUN_EVIDENCE" ]
+
+  rm "$RUN_EVIDENCE"              # LEAVE NO EVIDENCE!!!
 }
 
 @test "secrets should be available within $WRAP_SECRETS, but unavailable outside" {
