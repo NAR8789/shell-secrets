@@ -4,10 +4,20 @@
 
 FAILED_TO_FAIL=0
 
+ARTIFACT_DIR="${OUTPUT_DIR:-$CIRCLE_ARTIFACTS}"
+ARTIFACT_DIR="${OUTPUT_DIR:-test/artifacts}"
+OUTPUT_DIR="$ARTIFACT_DIR/fail_checks"
+rm -rf "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR"
+
 for FAIL_SRC in test/failure_examples/*; do
-  echo "$FAIL_SRC"
-  if SRC_PATH="$FAIL_SRC" bats test; then
+  FAIL_NAME="$(basename "$FAIL_SRC")"
+  SRC_PATH="$FAIL_SRC" bats test 2>"$OUTPUT_DIR/$FAIL_NAME.err" >"$OUTPUT_DIR/$FAIL_NAME.out"
+  if [ $? -eq 0 ] ; then
     FAILED_TO_FAIL=1
+    echo "ERROR: $FAIL_NAME did not cause a test failure"
+  else
+    echo "$FAIL_NAME fails tests, as expected"
   fi
 done
 
