@@ -10,7 +10,7 @@ function setup {
 
 @test "$WRAP_SECRETS should execute the command passed to it" {
   RUN_EVIDENCE="$BATS_TMPDIR/testfunc_ran"
-  refute [ -r "$RUN_EVIDENCE" ]   # usually don't bother to sanity check pre-state like this, but this time it seems worthwhile
+  rm -f "$RUN_EVIDENCE"           # a failed cleanup can result on a messy run tmpdir on the next run
 
   function testfunc {
     assert_equal "$1" first
