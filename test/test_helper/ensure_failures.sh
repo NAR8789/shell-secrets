@@ -15,9 +15,9 @@ for FAIL_SRC in test/failure_examples/*; do
   SRC_PATH="$FAIL_SRC" bats test 2>"$OUTPUT_DIR/$FAIL_NAME.err" >"$OUTPUT_DIR/$FAIL_NAME.out"
   if [ $? -eq 0 ] ; then
     FAILED_TO_FAIL=1
-    echo "ERROR: $FAIL_NAME did not cause a test failure"
+    printf "\033[0;31mERROR: $FAIL_NAME did not cause a test failure\n"
   else
-    echo "$FAIL_NAME fails tests, as expected"
+    printf "\033[0;32m$FAIL_NAME fails tests, as expected\n"
   fi
 done
 
