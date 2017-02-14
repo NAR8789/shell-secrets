@@ -2,7 +2,7 @@ dependencies:
   pre:
     - sudo add-apt-repository ppa:duggan/bats --yes
     - sudo apt-get -qq update
-    - sudo apt-get install -y bats
+    - sudo apt-get install -y bats shellcheck
     - npm install -g tap-xunit
 checkout:
   post:
@@ -11,6 +11,7 @@ checkout:
 test:
   override:
     - bats test | tee "$CIRCLE_TEST_REPORTS/test.tap.txt"
+    - shellcheck shell_secrets.sh
     - ./test/test_helper/ensure_failures.sh
   post:
     - cat "$CIRCLE_TEST_REPORTS/test.tap.txt" | tap-xunit > "$CIRCLE_TEST_REPORTS/test.junit.xml"
