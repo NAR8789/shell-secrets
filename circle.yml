@@ -1,6 +1,7 @@
 dependencies:
   pre:
     - sudo add-apt-repository ppa:duggan/bats --yes
+    - sudo apt-add-repository 'deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe'
     - sudo apt-get -qq update
     - sudo apt-get install -y bats shellcheck
     - npm install -g tap-xunit
