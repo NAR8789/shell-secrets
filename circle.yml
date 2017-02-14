@@ -5,13 +5,14 @@ dependencies:
     - sudo apt-get -qq update
     - sudo apt-get install -y bats shellcheck
     - npm install -g tap-xunit
+    - gem install bashcov
 checkout:
   post:
     - git submodule sync --recursive
     - git submodule update --init --recursive
 test:
   override:
-    - bats test | tee "$CIRCLE_TEST_REPORTS/test.tap.txt"
+    - bashcov -- /usr/bin/bats test | tee "$CIRCLE_TEST_REPORTS/test.tap.txt"
     - shellcheck shell_secrets.sh
     - ./test/test_helper/ensure_failures.sh
   post:
