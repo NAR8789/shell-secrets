@@ -11,5 +11,6 @@ checkout:
 test:
   override:
     - bats test | tee "$CIRCLE_TEST_REPORTS/test.tap.txt"
-    - cat "$CIRCLE_TEST_REPORTS/test.tap.txt" | tap-xunit > "$CIRCLE_TEST_REPORTS/test.junit.xml"
     - ./test/test_helper/ensure_failures.sh
+  post:
+    - cat "$CIRCLE_TEST_REPORTS/test.tap.txt" | tap-xunit > "$CIRCLE_TEST_REPORTS/test.junit.xml"
