@@ -1,1 +1,1 @@
-wrap_secrets.bats
+with_secrets.bats
