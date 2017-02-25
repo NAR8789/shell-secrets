@@ -5,11 +5,11 @@ dependencies:
     - sudo apt-get -qq update
     - sudo apt-get install -y bats shellcheck
     - npm install -g tap-xunit
-    - gem install bashcov
 checkout:
   post:
     - git submodule sync --recursive
     - git submodule update --init --recursive
+    - bundle install
 test:
   override:
     - bashcov -- /usr/bin/bats test | tee "$CIRCLE_TEST_REPORTS/test.tap.txt"
