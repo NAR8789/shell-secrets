@@ -20,6 +20,12 @@ function setup {
   assert_equal "$TEST_SECRET" 'look neither upon me!'
 }
 
+@test "$LOAD_SECRETS still works correctly when \"\$SHELL_SECRETS\" contains spaces" {
+  SHELL_SECRETS="$HOME/s p a c e secrets.asc"
+  $LOAD_SECRETS
+  assert_equal "$SPACE_SECRET" 'the terrible secret of space!'
+}
+
 @test "$LOAD_SECRETS should not leak environment unnecessarily" {
   $LOAD_SECRETS
   assert_unset $SHELL_SECRETS
