@@ -11,7 +11,8 @@ function load_secrets {
 function los { load_secrets "$@"; }
 
 function with_secrets {
-  ( load_secrets
+  ( set -a
+    load_secrets
     eval "$@" )
 }
 
